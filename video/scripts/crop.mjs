@@ -1,0 +1,11 @@
+import { bundle } from "@remotion/bundler";
+import { renderStill, selectComposition } from "@remotion/renderer";
+import { openWithRetry } from "./stills.mjs";
+import path from "node:path";
+const [id, out, frame] = process.argv.slice(2);
+const serveUrl = await bundle({ entryPoint: path.resolve("src/index.ts") });
+const browser = await openWithRetry();
+const composition = await selectComposition({ serveUrl, id, puppeteerInstance: browser, timeoutInMilliseconds: 240000 });
+await renderStill({ composition, serveUrl, frame: Number(frame), output: out, imageFormat: "png", puppeteerInstance: browser, timeoutInMilliseconds: 240000 });
+await browser.close({ silent: true });
+console.log("ok");

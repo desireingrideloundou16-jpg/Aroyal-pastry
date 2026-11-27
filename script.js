@@ -12,8 +12,8 @@
   /* ---------- Préchargement ---------- */
   let ready = false;
   const go = () => { if (ready) return; ready = true; body.classList.add('loaded'); startHero(); };
-  addEventListener('load', () => setTimeout(go, reduced ? 0 : 1300));
-  setTimeout(go, 3200);
+  addEventListener('load', () => setTimeout(go, reduced ? 0 : 600));
+  setTimeout(go, 2000);
 
   $('#year').textContent = new Date().getFullYear();
 
@@ -164,89 +164,47 @@
      FILM MOTION DESIGN (GSAP)
      ===================================================================== */
   const film = $('.film');
-  if (film && window.gsap) buildFilm();
-  else if (film) $('.film__poster').addEventListener('click', () => window.open('https://www.tiktok.com/@aroyal_pastry', '_blank'));
+  if (film) initFilm();
 
-  function buildFilm() {
-    const g = window.gsap;
+  function initFilm() {
     const S = s => $(s, film);
-    const tl = g.timeline({ paused: true, defaults: { ease: 'power3.out' } });
-    const scene = (sel, at) => tl.set(sel, { autoAlpha: 1 }, at);
-    const out = (sel, at) => tl.to(sel, { autoAlpha: 0, duration: .6, ease: 'power2.inOut' }, at);
-
-    g.set('.sc', { autoAlpha: 0 });
-
-    // 1. Logo (0 → 4.4s)
-    scene('.sc1', 0);
-    tl.from(S('.sc1__ring'), { scale: 0, opacity: 0, duration: 1.4, ease: 'expo.out' }, 0)
-      .from(S('.sc1__logo'), { scale: .2, rotate: -40, opacity: 0, duration: 1.1, ease: 'back.out(1.8)' }, .2)
-      .from($$('.sc1__name span', film), { yPercent: 120, opacity: 0, stagger: .06, duration: .8 }, .9)
-      .from(S('.sc1__name em'), { y: 30, opacity: 0, duration: .8 }, 1.3)
-      .from(S('.sc1__tag'), { y: 20, opacity: 0, duration: .8 }, 1.7)
-      .to(S('.sc1__ring'), { scale: 1.25, opacity: 0, duration: 2.4, ease: 'sine.inOut' }, 1.6);
-    out('.sc1', 3.8);
-
-    // 2. Ngaoundéré (4.2 → 8.2s)
-    scene('.sc2', 4.2);
-    tl.from(S('.sc2 .sc__kicker'), { y: 20, opacity: 0, duration: .6 }, 4.3)
-      .fromTo(S('.sc2__city'), { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.inOut' }, 4.5)
-      .from(S('.sc2__bar'), { scaleX: 0, duration: .9, ease: 'expo.out' }, 5.4)
-      .from(S('.sc2 .sc__small'), { y: 16, opacity: 0, duration: .7 }, 5.8);
-    out('.sc2', 7.6);
-
-    // 3. Gâteaux sur mesure (8 → 12.4s)
-    scene('.sc3', 8);
-    tl.fromTo(S('.sc3 .sc__bg'), { scale: 1.25 }, { scale: 1, duration: 4.4, ease: 'none' }, 8)
-      .from(S('.sc3 .sc__title'), { y: 60, opacity: 0, duration: 1.1 }, 8.6);
-    out('.sc3', 11.8);
-
-    // 4. Trompe-l'œil (12.2 → 16.8s)
-    scene('.sc4', 12.2);
-    tl.fromTo(S('.sc4 .sc__bg'), { scale: 1.3, xPercent: -6 }, { scale: 1.05, xPercent: 4, duration: 4.6, ease: 'none' }, 12.2)
-      .from(S('.sc4__a'), { y: 40, opacity: 0, duration: .9 }, 12.7)
-      .from(S('.sc4__b'), { y: 40, opacity: 0, duration: .9 }, 14);
-    out('.sc4', 16.2);
-
-    // 5. Douceurs (16.6 → 21s)
-    scene('.sc5', 16.6);
-    tl.from($$('.sc5__grid img', film), { scale: 1.4, opacity: 0, stagger: .18, duration: 1, ease: 'expo.out' }, 16.6)
-      .from(S('.sc5__txt'), { y: 30, opacity: 0, scale: .9, duration: .8, ease: 'back.out(1.6)' }, 17.6)
-      .to($$('.sc5__grid img', film), { scale: 1.08, duration: 3, ease: 'none' }, 17.6);
-    out('.sc5', 20.4);
-
-    // 6. Services (20.8 → 25s)
-    scene('.sc6', 20.8);
-    tl.from(S('.sc6 .sc__kicker'), { y: 20, opacity: 0, duration: .6 }, 20.9)
-      .from($$('.sc6__list li', film), { x: -50, opacity: 0, stagger: .25, duration: .8, ease: 'expo.out' }, 21.2)
-      .from($$('.sc6__list span', film), { scale: 0, rotate: -90, stagger: .25, duration: .8, ease: 'back.out(2)' }, 21.2);
-    out('.sc6', 24.4);
-
-    // 7. Appel à l'action (24.8 → 30s)
-    scene('.sc7', 24.8);
-    tl.from(S('.sc7__logo'), { scale: 0, rotate: 30, duration: 1, ease: 'back.out(1.7)' }, 24.9)
-      .from(S('.sc7 .sc__kicker'), { y: 20, opacity: 0, duration: .6 }, 25.4)
-      .from(S('.sc7__tel'), { y: 50, opacity: 0, duration: 1, ease: 'expo.out' }, 25.7)
-      .from(S('.sc7 .sc__small'), { opacity: 0, duration: .8 }, 26.4)
-      .to({}, { duration: 3.2 }, 26.8);
-
+    const v = S('.film__video');
     const bar = S('.film__bar span'), time = S('.film__time');
-    const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
-    tl.eventCallback('onUpdate', () => { bar.style.transform = `scaleX(${tl.progress()})`; time.textContent = fmt(tl.time()); });
-    tl.eventCallback('onComplete', () => { film.classList.remove('playing'); setTimeout(() => { tl.restart(); film.classList.add('playing'); }, 1500); });
+    // Format adapté à l'écran : 16:9 sur grand écran, 4:5 sur mobile
+    const wide = matchMedia('(min-width: 900px)');
+    const pick = () => {
+      const base = wide.matches ? v.dataset.wide : v.dataset.tall;
+      if (v.dataset.cur === base) return;
+      const t = v.currentTime, playing = !v.paused;
+      v.dataset.cur = base; v.poster = base + '.jpg'; v.src = base + '.mp4';
+      if (t) { v.currentTime = t; if (playing) v.play().catch(() => {}); }
+    };
+    pick(); wide.addEventListener('change', pick);
 
-    const play = () => { film.classList.add('started', 'playing'); tl.play(); };
-    const pause = () => { film.classList.remove('playing'); tl.pause(); };
-    S('.film__poster').addEventListener('click', play);
-    S('.film__play').addEventListener('click', () => { delete film.dataset.autopaused; film.classList.contains('playing') ? pause() : play(); });
+    const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    const sync = () => film.classList.toggle('muted', v.muted);
+    v.addEventListener('timeupdate', () => { bar.style.transform = `scaleX(${v.duration ? v.currentTime / v.duration : 0})`; time.textContent = fmt(v.currentTime); });
+    v.addEventListener('play', () => film.classList.add('started', 'playing'));
+    v.addEventListener('pause', () => film.classList.remove('playing'));
+    v.addEventListener('ended', () => { film.classList.remove('playing'); v.currentTime = 0; });
+    v.addEventListener('volumechange', sync);
+
+    const play = (sound) => { if (sound) v.muted = false; v.play().catch(() => { v.muted = true; v.play().catch(() => {}); }); sync(); };
+    S('.film__poster').addEventListener('click', () => { delete film.dataset.auto; play(true); });
+    S('.film__play').addEventListener('click', () => { delete film.dataset.autopaused; v.paused ? play(false) : v.pause(); });
+    S('.film__mute').addEventListener('click', () => { v.muted = !v.muted; });
+    S('.film__unmute').addEventListener('click', () => { v.muted = false; if (v.paused) play(true); });
+    v.addEventListener('click', () => { v.paused ? play(false) : v.pause(); });
     S('.film__bar').addEventListener('click', e => {
       const r = e.currentTarget.getBoundingClientRect();
-      tl.progress((e.clientX - r.left) / r.width);
-      if (!film.classList.contains('playing')) tl.pause();
+      if (v.duration) v.currentTime = v.duration * (e.clientX - r.left) / r.width;
     });
-    // Lecture auto quand le film est visible, pause quand il sort de l'écran
+    // Lecture auto (sans son, comme l'exigent les navigateurs) quand le film est visible
     if (!reduced) new IntersectionObserver(([en]) => {
-      if (en.isIntersecting && en.intersectionRatio > .55) { if (!film.classList.contains('started') || film.dataset.autopaused) { delete film.dataset.autopaused; play(); } }
-      else if (film.classList.contains('playing')) { film.dataset.autopaused = '1'; pause(); }
+      if (en.isIntersecting && en.intersectionRatio > .55) {
+        if (!film.classList.contains('started')) { v.muted = true; play(false); }
+        else if (film.dataset.autopaused) { delete film.dataset.autopaused; play(false); }
+      } else if (!v.paused) { film.dataset.autopaused = '1'; v.pause(); }
     }, { threshold: [0, .55] }).observe(film);
   }
 })();

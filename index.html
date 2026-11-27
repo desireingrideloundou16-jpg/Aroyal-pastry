@@ -299,67 +299,24 @@
     <section class="section film-sec" id="film">
       <header class="sec-head sec-head--center">
         <p class="eyebrow reveal"><span class="line"></span> Le film <span class="line"></span></p>
-        <h2 class="h2 reveal">Royal Pastry <em>en 30 secondes</em></h2>
+        <h2 class="h2 reveal">ARoyal Pastry <em>en une minute</em></h2>
       </header>
 
-      <div class="film reveal" aria-label="Film de présentation animé de ARoyal Pastry">
-        <div class="film__stage">
-          <!-- Scène 1 : logo -->
-          <div class="sc sc1">
-            <div class="sc1__ring"></div>
-            <img class="sc1__logo" src="img/emblem.png" alt="">
-            <p class="sc1__name"><span>R</span><span>o</span><span>y</span><span>a</span><span>l</span> <em>Pastry</em></p>
-            <p class="sc1__tag">La gourmandise au rendez-vous !</p>
-          </div>
-          <!-- Scène 2 : Ngaoundéré -->
-          <div class="sc sc2">
-            <p class="sc__kicker">Depuis</p>
-            <p class="sc2__city">Ngaoundéré</p>
-            <span class="sc2__bar"></span>
-            <p class="sc__small">Pâtisseries de tous genres, faites maison</p>
-          </div>
-          <!-- Scène 3 : gâteaux -->
-          <div class="sc sc3">
-            <img class="sc__bg" src="img/produits/layer-cake.jpg" alt="">
-            <div class="sc__veil"></div>
-            <p class="sc__title">Des gâteaux<br><em>sur mesure</em></p>
-          </div>
-          <!-- Scène 4 : trompe-l'œil -->
-          <div class="sc sc4">
-            <img class="sc__bg" src="img/tl-panorama.jpg" alt="">
-            <div class="sc__veil"></div>
-            <p class="sc4__a">Ça a l'air vrai…</p>
-            <p class="sc4__b"><em>c'est un dessert.</em></p>
-          </div>
-          <!-- Scène 5 : douceurs -->
-          <div class="sc sc5">
-            <div class="sc5__grid">
-              <img src="img/produits/cupcakes.jpg" alt=""><img src="img/produits/muffins.jpg" alt="">
-              <img src="img/produits/crepes-pliees.jpg" alt=""><img src="img/produits/pancakes-cakes.jpg" alt="">
-            </div>
-            <p class="sc5__txt">Cupcakes · Muffins · Crêpes · Pancakes</p>
-          </div>
-          <!-- Scène 6 : services -->
-          <div class="sc sc6">
-            <p class="sc__kicker">Pour tous vos événements</p>
-            <ul class="sc6__list"><li><span>🎂</span>Traiteur</li><li><span>🛵</span>Livraison</li><li><span>👩🏾‍🍳</span>Formations</li></ul>
-          </div>
-          <!-- Scène 7 : appel à l'action -->
-          <div class="sc sc7">
-            <img class="sc7__logo" src="img/emblem.png" alt="">
-            <p class="sc__kicker">Commandez maintenant</p>
-            <p class="sc7__tel">698 65 88 85</p>
-            <p class="sc__small">#RoyalementVôtre</p>
-          </div>
-        </div>
+      <div class="film reveal">
+        <video class="film__video" playsinline preload="none" poster="img/film-4x5.jpg"
+          data-wide="img/film-16x9" data-tall="img/film-4x5"
+          aria-label="Film de présentation de ARoyal Pastry, avec voix off : nos gâteaux, trompe-l'œil, douceurs, salés, services, contact et localisation"></video>
         <div class="film__ui">
           <button class="film__play" aria-label="Lecture / pause"><svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
           <div class="film__bar"><span></span></div>
           <span class="film__time">0:00</span>
+          <button class="film__mute" aria-label="Activer / couper le son"><svg class="i-on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3Zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg><svg class="i-off" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3Zm18.7 0L20.3 7.6 17.7 10.2 15.1 7.6 13.7 9l2.6 2.6-2.6 2.6 1.4 1.4 2.6-2.6 2.6 2.6 1.4-1.4-2.6-2.6L21.7 9Z"/></svg></button>
         </div>
-        <button class="film__poster" aria-label="Lancer le film">
+        <button class="film__unmute" aria-label="Activer le son du film"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3Zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4ZM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg> Activer le son</button>
+        <button class="film__poster" aria-label="Lancer le film avec le son">
           <span class="film__btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
           <span class="film__ptxt">Lancer le film</span>
+          <span class="film__psub">1 min · avec voix off</span>
         </button>
       </div>
     </section>
@@ -564,8 +521,6 @@
     <button class="lightbox__nav lightbox__prev" aria-label="Photo précédente">‹</button>
     <button class="lightbox__nav lightbox__next" aria-label="Photo suivante">›</button>
   </dialog>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
